@@ -30,28 +30,35 @@ st.markdown(
 num_test = st.session_state["num_test"]
 st.title(f"Test {num_test+1}")
 
-src_dir = "/Users/nptlinh/Desktop/BA-Code/testing_gui/media/public"
+src_dir = r"C:\Users\LinhNguyen\Desktop\BA_Code\testing_gui\media\public"
 sound_samples = []
 sound_files = {}
-save_file = "/Users/nptlinh/Desktop/BA-Code/testing_gui/results/public.csv"
+save_file = r"C:\Users\LinhNguyen\Desktop\BA_Code\testing_gui\results\public.csv"
 
-for file_path in sorted(glob.glob(f"{src_dir}/*.wav")):
+for file_path in sorted(glob.glob(f"{src_dir}\\*.wav")):
     sound_samples.append(os.path.basename(file_path))
     sound_files[sound_samples[-1]] = file_path
+
 
 
 test = ListeningTest("public", st.session_state["name"], sound_samples.copy(), src_dir=src_dir)
 
 random.shuffle(sound_samples)
 
-st.write("### Please move the slider to reflect your experience. Please also take into account relative experience to other samples as well ###")
+st.write("### Please move the slider to indicate if you feel eardrum suck effect. Please also take into account relative experience to other samples as well ###")
+st.write("""
+         **Eardrum suck effect encompasses**:
+         * Pressure at the eardrum
+         * Vibration Sensation
+         * Headaches or dizzyness
+""")
 with st.form("public"):
     columns = st.columns(len(sound_samples))
     for i in range(0, len(sound_samples)):
         columns[i].subheader(f"Sample {i+1}: ")
         with columns[i]:
             st.audio(sound_files[sound_samples[i]])
-            st.write("0 = None, 10 = Strong Sensation")
+            st.write("***0 = None, 5 = Clear Sensation, 10 = Strong Sensation***")
             test.ratings[sound_samples[i]] = vertical_slider(default_value=0, min_value=0, max_value=10, step=1, key=str(i), track_color="gray",
                     thumb_color="black",
                     slider_color="blue")
@@ -69,6 +76,8 @@ if st.session_state["done"]:
 
     # Prepare the row data according to the header
     row = [test.id] + [test.ratings.get(sample, "") for sample in header[1:]]
+    print("public")
+    print(test.ratings)
 
     # Check if the file exists and is empty
     file_exists = os.path.isfile(save_file) and os.path.getsize(save_file) > 0

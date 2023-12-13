@@ -9,3 +9,4 @@ def read_header(file_path):
             reader = csv.reader(file)
             return next(reader, None)
     return None
+

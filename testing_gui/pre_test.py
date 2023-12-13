@@ -19,7 +19,7 @@ st.markdown(
 
 
 tests = ["airplane", "car", "train", "public", "sine_white", "tot"]
-save_file = "/Users/nptlinh/Desktop/BA-Code/testing_gui/results/survey.csv"
+save_file = r"C:\Users\LinhNguyen\Desktop\BA_Code\testing_gui\results\survey.csv"
 random.shuffle(tests)
 
 st.session_state["tests"] = tests
