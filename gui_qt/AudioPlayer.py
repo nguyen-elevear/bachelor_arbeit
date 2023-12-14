@@ -10,15 +10,16 @@ import csv
 class AudioPlayer(QWidget):
     def __init__(self, audio_folder, parent_window):
         super().__init__()
-        self.initUI(audio_folder)
         self.test_name = os.path.basename(audio_folder)
+        self.audio_folder = audio_folder
         self.parent_window = parent_window
+        self.initUI(audio_folder)
 
 
     def initUI(self, audio_folder):
         main_layout = QVBoxLayout()
 
-        title_label = QLabel('Test #')
+        title_label = QLabel(f'Test {self.parent_window.current_test_index+1}')
         title_label.setAlignment(Qt.AlignCenter)
         title_label.setStyleSheet("font-size: 24pt; font-weight: bold;")
         main_layout.addWidget(title_label)
@@ -26,7 +27,7 @@ class AudioPlayer(QWidget):
 
         definition_label = QLabel(
             "<h2>Eardrum Suck Definitions:</h2>"
-            "<ul style='font-size: 18pt;'>"
+            "<ul style='font-size: 12pt;'>"
             "<li>Pressure at the eardrum</li>"
             "<li>Vibration Sensation</li>"
             "<li>Dizzyness or Headaches</li>"
@@ -71,7 +72,7 @@ class AudioPlayer(QWidget):
                 "}"
             )
             vbox.addWidget(play_button)
-
+            vbox.addSpacing(20)
             # Max label
             max_label = QLabel('Strong Sensation = 10')
             max_label.setAlignment(Qt.AlignCenter)
@@ -117,7 +118,7 @@ class AudioPlayer(QWidget):
         # Set the button's stylesheet for rounded corners
         self.complete_test_button.setStyleSheet("""
             QPushButton {
-                border: 0.5px solid white;
+                border: 0.5px solid;
                 border-radius: 10px;
                 padding: 10px 20px;   
                 font-size: 16pt;
@@ -152,7 +153,7 @@ class AudioPlayer(QWidget):
         else:
             if self.currently_playing:
                 self.playing[self.currently_playing] = False
-            self.player.setMedia(QMediaContent(QUrl.fromLocalFile(os.path.join(audio_folder, filename))))
+            self.player.setMedia(QMediaContent(QUrl.fromLocalFile(os.path.join(self.audio_folder, filename))))
             self.player.play()
             self.playing[filename] = True
             self.currently_playing = filename
@@ -168,9 +169,11 @@ class AudioPlayer(QWidget):
     def keyPressEvent(self, event):
         if event.key() >= Qt.Key_1 and event.key() <= Qt.Key_9:
             index = event.key() - Qt.Key_1
+            print(event.key())
             if index < len(self.files):
-                self.play_audio(self.files[index])
-        elif event.key() == Qt.Key_Space:
+                self.play_audio(self.permutation[index])
+        elif event.key() == Qt.Key_0:
+            print(event.key())
             self.stop_all_audio()
 
 
@@ -189,6 +192,7 @@ class AudioPlayer(QWidget):
 
 
     def complete_test(self):
+        self.stop_all_audio()
         save_file = os.path.join(self.parent_window.results_dir, f"{self.test_name}.csv")
         header = read_header(save_file)
         file_written = True

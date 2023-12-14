@@ -23,14 +23,17 @@ class HomeWindow(QWidget):
         layout.addWidget(title_label)
 
         # Input field for test taker's name
-        name_label = QLabel("Please enter your name below:")
+        name_label = QLabel("<h3> Please enter your name below: </h3>")
         name_label.setAlignment(Qt.AlignLeft)
         layout.addWidget(name_label)
 
         self.name_input = QLineEdit()
+        self.name_input.setMinimumSize(200, 40)
         self.name_input.setPlaceholderText("Your Name")
         layout.addWidget(self.name_input)
 
+
+        layout.addSpacing(20)
         motion_sickness = QLabel("<h3> Have you ever experienced motion sickness? (riding a crazy roller coaster doesn't count) </h3>")
         motion_sickness.setAlignment(Qt.AlignLeft)
         layout.addWidget(motion_sickness)
@@ -48,7 +51,7 @@ class HomeWindow(QWidget):
         self.motion_sickness.setLayout(motion_sickness_layout)
         layout.addWidget(self.motion_sickness)
 
-
+        layout.addSpacing(20)
         eardrum_suck = QLabel("<h3> Have you ever experienced the eardrum suck effect when using ANC products? </h3>")
         eardrum_suck.setAlignment(Qt.AlignLeft)
         layout.addWidget(eardrum_suck)
@@ -74,6 +77,8 @@ class HomeWindow(QWidget):
         print(self.audio_folders)
         print(self.randomized_tests)
 
+
+        layout.addSpacing(20)
         # Create a horizontal layout for centering the button
         button_layout = QHBoxLayout()
 
@@ -83,15 +88,15 @@ class HomeWindow(QWidget):
         start_button = QPushButton("Start Random Test")
         start_button.clicked.connect(self.start)
         
-        start_button.setMinimumSize(200, 50)
+        start_button.setMinimumSize(200, 40)
 
         # Set the button's stylesheet for rounded corners
         start_button.setStyleSheet("""
             QPushButton {
-                border: 0.5px solid white;
+                border: 0.5px solid;
                 border-radius: 10px;
-                padding: 10px 20px;   
-                font-size: 16pt;
+                padding: 10px 20px;
+                font-size: 12pt;
             }
         """)
         # Add the button to the button layout
@@ -181,6 +186,6 @@ class HomeWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    home = HomeWindow("/Users/nptlinh/Desktop/BA-Code/gui_qt/media", "/Users/nptlinh/Desktop/BA-Code/gui_qt/results")
+    home = HomeWindow(r"C:\Users\LinhNguyen\Desktop\BA_Code\gui_qt\media", r"C:\Users\LinhNguyen\Desktop\BA_Code\gui_qt\results")
     home.show()
     sys.exit(app.exec_())
