@@ -13,6 +13,7 @@ class AudioPlayer(QWidget):
         self.test_name = os.path.basename(audio_folder)
         self.audio_folder = audio_folder
         self.parent_window = parent_window
+        self.currently_selected_slider = None
         self.initUI(audio_folder)
 
 
@@ -167,14 +168,18 @@ class AudioPlayer(QWidget):
 
 
     def keyPressEvent(self, event):
-        if event.key() >= Qt.Key_1 and event.key() <= Qt.Key_9:
+        key = event.key()
+        if key >= Qt.Key_1 and key <= Qt.Key_9:
             index = event.key() - Qt.Key_1
             print(event.key())
             if index < len(self.files):
                 self.play_audio(self.permutation[index])
-        elif event.key() == Qt.Key_0:
+                self.currently_selected_slider = self.permutation[index]
+        elif key == Qt.Key_0:
             print(event.key())
             self.stop_all_audio()
+        elif key == Qt.Key_W or key == Qt.Key_S:
+            self.adjust_slider(key)
 
 
 
@@ -219,6 +224,15 @@ class AudioPlayer(QWidget):
         self.close()
 
 
+
+    def adjust_slider(self, key):
+        if self.currently_selected_slider and self.currently_selected_slider in self.widget_refs.keys():
+            slider = self.widget_refs[self.currently_selected_slider]['slider']
+            current_value = slider.value()
+            if key == Qt.Key_W:
+                slider.setValue(min(current_value + 1, slider.maximum()))
+            elif key == Qt.Key_S:
+                slider.setValue(max(current_value - 1, slider.minimum()))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
