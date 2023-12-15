@@ -159,6 +159,7 @@ class HomeWindow(QWidget):
             QMessageBox.information(self, "Thank You", "Thank you for participating in the tests!")
             self.reset_survey()
             self.current_test_index = 0  # Reset for next round
+            self.randomized_tests = random.sample(self.audio_folders, len(self.audio_folders))
             self.show()
 
 
