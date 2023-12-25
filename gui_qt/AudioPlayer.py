@@ -30,7 +30,6 @@ class AudioPlayer(QWidget):
             "<h2>Eardrum Suck Definitions:</h2>"
             "<ul style='font-size: 12pt;'>"
             "<li>Pressure at the eardrum</li>"
-            "<li>Vibration Sensation</li>"
             "<li>Dizzyness or Headaches</li>"
             "</ul>"
         )
