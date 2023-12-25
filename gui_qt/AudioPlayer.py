@@ -27,10 +27,11 @@ class AudioPlayer(QWidget):
 
 
         definition_label = QLabel(
-            "<h2>Eardrum Suck Definitions:</h2>"
+            "<h2> Please rate the listening experience according to this criteria:</h2>"
             "<ul style='font-size: 12pt;'>"
-            "<li>Pressure at the eardrum</li>"
-            "<li>Dizzyness or Headaches</li>"
+            "<li>How strongly do you feel a sensation that is somewhat similar to a muffled/clogged/blocked ear? Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator and you need to swallow to hear normal again</li>"
+            "<li>How strongly do you feel dizzyness or a headache?</li>"
+            "<li> 10 = Strong Sensation, 0 = None, just like normal, 5 = The criterias above describe perfectly what I feel"
             "</ul>"
         )
         definition_label.setAlignment(Qt.AlignLeft)
