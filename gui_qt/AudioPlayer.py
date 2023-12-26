@@ -12,6 +12,7 @@ class AudioPlayer(QWidget):
         super().__init__()
         self.test_name = os.path.basename(audio_folder)
         self.audio_folder = audio_folder
+        self.test_type = os.path.basename(os.path.dirname(audio_folder))
         self.parent_window = parent_window
         self.currently_selected_slider = None
         self.initUI(audio_folder)
@@ -26,14 +27,38 @@ class AudioPlayer(QWidget):
         main_layout.addWidget(title_label)
 
 
-        definition_label = QLabel(
-            "<h2> Please rate the listening experience according to this criteria:</h2>"
-            "<ul style='font-size: 12pt;'>"
-            "<li>How strongly do you feel a sensation that is somewhat similar to a muffled/clogged/blocked ear? Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator and you need to swallow to hear normal again</li>"
-            "<li>How strongly do you feel dizzyness or a headache?</li>"
-            "<li> 10 = Strong Sensation, 0 = None, just like normal, 5 = The criterias above describe perfectly what I feel"
-            "</ul>"
-        )
+        if self.test_type == "filter_pos":
+            definition_label = QLabel(
+                "<h2> Please rate the listening experience according to this criteria:</h2>"
+                "<ul style='font-size: 12pt;'>"
+                "<li>How strongly do you feel a sensation that is somewhat similar to a muffled/clogged/blocked ear? Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator and you need to swallow to hear normal again</li>"
+                "<li>How strongly do you feel dizzyness or a headache?</li>"
+                "<li> 10 = Strong Sensation, 0 = None, just like normal, 5 = The criterias above describe perfectly what I feel"
+                "</ul>"
+                
+                "<h2> How to interact with the test interface: </h2>"
+                "<ul style='font-size: 12pt;'>"
+                "<li>Press the corresponding number on the keyboard to switch to the desired sample. You can do this to switch between the sample to compare them with each other</li>"
+                "<li> \"Reference Sample\" is what you suppose to give a 0, notice that it can be pereceived as louder than other sample, which mean you shouldn't evaluate based on loudness</li>"
+                "<li>When you are listening to a sample, the corresponding slider can be moved using W and S key on the keyboard</li>"
+                "</ul>"
+            )
+        else:
+            definition_label = QLabel(
+                "<h2> You will be presented with listening samples of different sound transitions, each is 3 seconds long and NOT looped. </h2>"
+                "<h2>The transition happens at about half way of the sample. Please pay attention to your listening experience after the transition</h2>"
+                "<h2> Please rate the listening experience according to this criteria:</h2>"
+                "<ul style='font-size: 12pt;'>"
+                "<li>How strongly do you feel a sensation that is somewhat similar to a muffled/clogged/blocked ear? Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator</li>"
+                "<li>How strongly do you feel dizzyness or a headache?</li>"
+                "<li> 10 = Strong Sensation, feel like I need to swallow to pop my ear, 0 = None, just like normal, 5 = The criterias above describe perfectly what I feel"
+                "</ul>"
+                "<h2> How to interact with the test interface: </h2>"
+                "<ul style='font-size: 12pt;'>"
+                "<li>Press the corresponding number on the keyboard to switch to the desired sample. You can do this to switch between the sample to compare them with each other</li>"
+                "<li>When you are listening to a sample, the corresponding slider can be moved using W and S key on the keyboard</li>"
+                "</ul>"
+            )
         definition_label.setAlignment(Qt.AlignLeft)
         main_layout.addWidget(definition_label)
         main_layout.addSpacing(20)
@@ -45,7 +70,11 @@ class AudioPlayer(QWidget):
 
         self.player = QMediaPlayer()
         self.player.setVolume(100)
-        self.player.mediaStatusChanged.connect(self.loop_audio)
+
+        if self.test_type == "filter_pos":
+            self.player.mediaStatusChanged.connect(self.loop_audio)
+        else:
+            self.player.mediaStatusChanged.connect(self.reset_audio)
 
         self.files, self.permutation = self.load_audio_files(audio_folder)
         self.playing = {filename: False for filename in self.files}
@@ -55,9 +84,12 @@ class AudioPlayer(QWidget):
 
         for index, filename in enumerate(self.permutation):
             vbox = QVBoxLayout()  # Vertical layout for each audio file's controls
-
-            # Play button at the top
-            play_button = QPushButton(f'Sample #{index+1}')
+            print (filename)
+            if "passive" not in filename:
+                # Play button at the top
+                play_button = QPushButton(f'Sample #{index+1}')
+            else:
+                play_button = QPushButton(f'Reference Sample')
             play_button.setMinimumHeight(50)
             play_button.clicked.connect(lambda _, name=filename: self.play_audio(name))
             # Set stylesheet for rounded corners
@@ -74,33 +106,34 @@ class AudioPlayer(QWidget):
             )
             vbox.addWidget(play_button)
             vbox.addSpacing(20)
-            # Max label
-            max_label = QLabel('Strong Sensation = 10')
-            max_label.setAlignment(Qt.AlignCenter)
-            vbox.addWidget(max_label)
 
-            # Slider
-            slider = QSlider(Qt.Vertical)
-            slider.setRange(0, 10)
-            slider.valueChanged.connect(lambda value, name=filename: self.update_slider_label(name, value))
-            slider.setTickPosition(QSlider.TicksLeft)  # Set tick marks to the left
-            slider.setTickInterval(1)  # Set tick interval
-            slider.setMinimumSize(30, 300)  # Minimum width and height
-            vbox.addWidget(slider, alignment=Qt.AlignCenter)
+            if "passive" not in filename:
+                # Max label
+                max_label = QLabel('Strong Sensation = 10')
+                max_label.setAlignment(Qt.AlignCenter)
+                vbox.addWidget(max_label)
+                # Slider
+                slider = QSlider(Qt.Vertical)
+                slider.setRange(0, 10)
+                slider.valueChanged.connect(lambda value, name=filename: self.update_slider_label(name, value))
+                slider.setTickPosition(QSlider.TicksLeft)  # Set tick marks to the left
+                slider.setTickInterval(1)  # Set tick interval
+                slider.setMinimumSize(30, 300)  # Minimum width and height
+                vbox.addWidget(slider, alignment=Qt.AlignCenter)
 
-            # Min label
-            min_label = QLabel('None = 0')
-            min_label.setAlignment(Qt.AlignCenter)
-            vbox.addWidget(min_label)
+                # Min label
+                min_label = QLabel('None = 0')
+                min_label.setAlignment(Qt.AlignCenter)
+                vbox.addWidget(min_label)
 
-            # Value label
-            value_label = QLabel('Actual Value: 0')
-            value_label.setAlignment(Qt.AlignCenter)
-            vbox.addWidget(value_label)
+                # Value label
+                value_label = QLabel('Actual Value: 0')
+                value_label.setAlignment(Qt.AlignCenter)
+                vbox.addWidget(value_label)
 
-            # Store references to the slider and value label
-            self.widget_refs[filename] = {'slider': slider, 'rating': value_label}
-            self.ratings[filename] = 0
+                # Store references to the slider and value label
+                self.widget_refs[filename] = {'slider': slider, 'rating': value_label}
+                self.ratings[filename] = 0
             vbox.addStretch(1)
             sliders_layout.addLayout(vbox)
 
@@ -142,6 +175,12 @@ class AudioPlayer(QWidget):
     def load_audio_files(self, folder):
         file_list = sorted([file for file in os.listdir(folder) if file.endswith('.wav')])
         permutation = random.sample(file_list, len(file_list))
+        for index, element in enumerate(permutation):
+            if "passive" in element:
+                reference_index = index
+                break
+        permutation[0], permutation[reference_index] = permutation[reference_index], permutation[0]
+
         return file_list, permutation
 
 
@@ -203,7 +242,7 @@ class AudioPlayer(QWidget):
         file_written = True
 
         if header is None:
-            header = ["ID"] + self.files
+            header = ["ID"] + [file for file in self.files if "passive" not in file]
             file_written = False
         row = [self.parent_window.name] + [self.ratings[filename] for filename in header[1:]]
 
@@ -234,9 +273,16 @@ class AudioPlayer(QWidget):
             elif key == Qt.Key_S:
                 slider.setValue(max(current_value - 1, slider.minimum()))
 
+
+
+    def reset_audio(self):
+        self.playing[self.currently_playing] = False
+        self.currently_playing = None
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    audio_folder = "/Users/nptlinh/Desktop/BA-Code/testing_gui/media/airplane"
-    ex = AudioPlayer(audio_folder)
+    audio_folder = "/Users/nptlinh/Desktop/BA-Code/gui_qt/media/filter_pos/airplane"
+    ex = AudioPlayer(audio_folder, None)
     ex.show()
     sys.exit(app.exec_())
