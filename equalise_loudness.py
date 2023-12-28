@@ -28,4 +28,4 @@ files = {
     "sine": "/Users/nptlinh/Desktop/BA-Code/test_set/sine.wav"
 }
 
-modify_loudness(files, -35)
+modify_loudness(files, -32)
