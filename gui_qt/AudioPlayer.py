@@ -41,9 +41,9 @@ class AudioPlayer(QWidget):
                 
                 "<h2> How to interact with the test interface: </h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
-                "<li style='margin-bottom: 5px;'>Press the corresponding number on the keyboard to switch to the desired sample. You can do this to switch between the sample to compare them with each other</li>"
-                "<li style='margin-bottom: 5px;'> <strong><em>\"Reference Sample\"</strong></em> is what you suppose to give a 0, notice that it can be pereceived as louder than other sample, which mean you shouldn't evaluate based on loudness</li>"
-                "<li style='margin-bottom: 5px;'>When you are listening to a sample, the corresponding slider can be moved using W and S key on the keyboard</li>"
+                "<li style='margin-bottom: 5px;'><strong><em>Press the corresponding number on the keyboard</strong></em> to switch to the desired sample. You can do this to switch between the sample to compare them with each other</li>"
+                "<li style='margin-bottom: 5px;'><strong><em>\"Reference Sample\"</strong></em> is what you suppose to give a 0, notice that it can be pereceived as louder than other sample, which mean you shouldn't evaluate based on loudness</li>"
+                "<li style='margin-bottom: 5px;'>When you are listening to a sample, <strong><em>the corresponding slider can be moved using W and S key</strong></em> on the keyboard</li>"
                 "</ul>"
             )
         else:
@@ -61,9 +61,9 @@ class AudioPlayer(QWidget):
                 "</ul>"
                 "<h2> How to interact with the test interface: </h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
-                "<li style='margin-bottom: 5px;'>Press the corresponding number on the keyboard to switch to the desired sample. You can do this to switch between the sample to compare them with each other</li>"
+                "<li style='margin-bottom: 5px;'><strong><em>Press the corresponding number on the keyboard</strong></em> to switch to the desired sample. You can do this to switch between the sample to compare them with each other</li>"
                 "<li style='margin-bottom: 5px;'> <strong><em>\"Reference Sample\"</strong></em> is what you suppose to give a 0, it doesn't have any transition</li>"
-                "<li style='margin-bottom: 5px;'>When you are listening to a sample, the corresponding slider can be moved using W and S key on the keyboard</li>"
+                "<li style='margin-bottom: 5px;'>When you are listening to a sample, <strong><em>the corresponding slider can be moved using W and S key</strong></em> on the keyboard</li>"
                 "</ul>"
             )
         definition_label.setAlignment(Qt.AlignLeft)
