@@ -3,6 +3,7 @@ import os
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QSlider, QLabel, QSizePolicy, QTextEdit
 from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
+from ClickableVBox import ClickableVBoxLayout
 import random
 from handle_csv import read_header
 import csv
@@ -16,6 +17,7 @@ class AudioPlayer(QWidget):
         self.parent_window = parent_window
         self.currently_selected_slider = None
         self.initUI(audio_folder)
+        self.setFocusPolicy(Qt.StrongFocus)
 
 
     def initUI(self, audio_folder):
@@ -90,7 +92,7 @@ class AudioPlayer(QWidget):
         self.ratings = {}
 
         for index, filename in enumerate(self.permutation):
-            vbox = QVBoxLayout()  # Vertical layout for each audio file's controls
+            vbox = ClickableVBoxLayout()  # Vertical layout for each audio file's controls
             print (filename)
             if "passive" not in filename:
                 # Play button at the top
@@ -125,7 +127,8 @@ class AudioPlayer(QWidget):
                 slider.valueChanged.connect(lambda value, name=filename: self.update_slider_label(name, value))
                 slider.setTickPosition(QSlider.TicksLeft)  # Set tick marks to the left
                 slider.setTickInterval(1)  # Set tick interval
-                slider.setMinimumSize(30, 300)  # Minimum width and height
+                slider.setMinimumSize(30, 200)  # Minimum width and height
+                slider.setMaximumHeight(300)
                 vbox.addWidget(slider, alignment=Qt.AlignCenter)
 
                 # Min label
@@ -149,8 +152,10 @@ class AudioPlayer(QWidget):
         # Comment Box
         self.comment_box = QTextEdit()
         self.comment_box.setPlaceholderText("Additional Comments about the samples (if any): ")
-        self.comment_box.setMinimumHeight(100)
+        self.comment_box.setMinimumHeight(50)
         main_layout.addWidget(self.comment_box)
+        self.comment_box.setFocusPolicy(Qt.ClickFocus)
+
         main_layout.addSpacing(20)
         # Create a horizontal layout for centering the button
         button_layout = QHBoxLayout()
@@ -221,19 +226,21 @@ class AudioPlayer(QWidget):
 
 
     def keyPressEvent(self, event):
-        key = event.key()
-        if key >= Qt.Key_1 and key <= Qt.Key_9:
-            index = event.key() - Qt.Key_1
-            print(event.key())
-            if index < len(self.files):
-                self.play_audio(self.permutation[index])
-                self.currently_selected_slider = self.permutation[index]
-        elif key == Qt.Key_0:
-            print(event.key())
-            self.stop_all_audio()
-        elif key == Qt.Key_W or key == Qt.Key_S:
-            self.adjust_slider(key)
-
+        if not self.comment_box.hasFocus():
+            key = event.key()
+            if key >= Qt.Key_1 and key <= Qt.Key_9:
+                index = event.key() - Qt.Key_1
+                print(event.key())
+                if index < len(self.files):
+                    self.play_audio(self.permutation[index])
+                    self.currently_selected_slider = self.permutation[index]
+            elif key == Qt.Key_0:
+                print(event.key())
+                self.stop_all_audio()
+            elif key == Qt.Key_W or key == Qt.Key_S:
+                self.adjust_slider(key)
+        else:
+            super().keyPressEvent(event)
 
 
     def stop_all_audio(self):
