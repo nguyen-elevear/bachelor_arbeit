@@ -153,8 +153,15 @@ class AudioPlayer(QWidget):
         self.comment_box = QTextEdit()
         self.comment_box.setPlaceholderText("Additional Comments about the samples (if any): ")
         self.comment_box.setMinimumHeight(50)
-        main_layout.addWidget(self.comment_box)
+        self.comment_box.setStyleSheet("""
+            QTextEdit {
+            border: 1px solid;
+            border-radius: 5px;
+            }
+        """)
         self.comment_box.setFocusPolicy(Qt.ClickFocus)
+        main_layout.addWidget(self.comment_box)
+        
 
         main_layout.addSpacing(20)
         # Create a horizontal layout for centering the button
