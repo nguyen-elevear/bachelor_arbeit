@@ -1,6 +1,6 @@
 import sys
 import os
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QSlider, QLabel, QSizePolicy
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QSlider, QLabel, QSizePolicy, QTextEdit
 from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 import random
@@ -145,6 +145,13 @@ class AudioPlayer(QWidget):
             sliders_layout.addLayout(vbox)
 
         main_layout.addSpacing(20)
+
+        # Comment Box
+        self.comment_box = QTextEdit()
+        self.comment_box.setPlaceholderText("Additional Comments about the samples (if any): ")
+        self.comment_box.setMinimumHeight(100)
+        main_layout.addWidget(self.comment_box)
+        main_layout.addSpacing(20)
         # Create a horizontal layout for centering the button
         button_layout = QHBoxLayout()
 
@@ -247,11 +254,12 @@ class AudioPlayer(QWidget):
         save_file = os.path.join(self.parent_window.results_dir, f"{self.test_name}.csv")
         header = read_header(save_file)
         file_written = True
+        comments = self.comment_box.toPlainText()
 
         if header is None:
-            header = ["ID"] + [file for file in self.files if "passive" not in file]
+            header = ["ID"] + [file for file in self.files if "passive" not in file] + ["comments"]
             file_written = False
-        row = [self.parent_window.name] + [self.ratings[filename] for filename in header[1:]]
+        row = [self.parent_window.name] + [self.ratings[filename] for filename in header[1:]] + [comments]
 
         
 
