@@ -18,14 +18,19 @@ def modify_loudness(files, norm_loudness):
 
 
 
+# files = {
+#     "airplane": "/Users/nptlinh/Desktop/BA-Code/test_set/Inside_Aircraft2_binaural ( 0.00-30.00 s).wav",
+#     "train": "/Users/nptlinh/Desktop/BA-Code/test_set/Inside_Train_Noise1_binaural ( 0.00-30.00 s).wav",
+#     "car": "/Users/nptlinh/Desktop/BA-Code/test_set/Midsize_Car1_100Kmh_binaural ( 0.00-30.00 s).wav",
+#     "nature_creek": "/Users/nptlinh/Desktop/BA-Code/test_set/Nature2_Creek_binaural ( 0.00-30.00 s).wav",
+#     "public": "/Users/nptlinh/Desktop/BA-Code/test_set/Pub_Noise_Binaural_V2.wav",
+#     "open_field": "/Users/nptlinh/Desktop/BA-Code/test_set/Nature3_Open_Field_Noise_binaural ( 0.00-30.00 s).wav",
+#     "sine": "/Users/nptlinh/Desktop/BA-Code/test_set/sine.wav"
+# }
+        
 files = {
-    "airplane": "/Users/nptlinh/Desktop/BA-Code/test_set/Inside_Aircraft2_binaural ( 0.00-30.00 s).wav",
-    "train": "/Users/nptlinh/Desktop/BA-Code/test_set/Inside_Train_Noise1_binaural ( 0.00-30.00 s).wav",
-    "car": "/Users/nptlinh/Desktop/BA-Code/test_set/Midsize_Car1_100Kmh_binaural ( 0.00-30.00 s).wav",
-    "nature_creek": "/Users/nptlinh/Desktop/BA-Code/test_set/Nature2_Creek_binaural ( 0.00-30.00 s).wav",
-    "public": "/Users/nptlinh/Desktop/BA-Code/test_set/Pub_Noise_Binaural_V2.wav",
-    "open_field": "/Users/nptlinh/Desktop/BA-Code/test_set/Nature3_Open_Field_Noise_binaural ( 0.00-30.00 s).wav",
-    "sine": "/Users/nptlinh/Desktop/BA-Code/test_set/sine.wav"
+    "low_bias": "/Users/nptlinh/Desktop/BA-Code/low_bias.wav",
+    "high_bias": "/Users/nptlinh/Desktop/BA-Code/high_bias.wav",
 }
 
-modify_loudness(files, -32)
+modify_loudness(files, -27)
