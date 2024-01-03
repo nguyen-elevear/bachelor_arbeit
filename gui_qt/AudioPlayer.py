@@ -266,7 +266,8 @@ class AudioPlayer(QWidget):
         if header is None:
             header = ["ID"] + [file for file in self.files if "passive" not in file] + ["comments"]
             file_written = False
-        row = [self.parent_window.name] + [self.ratings[filename] for filename in header[1:]] + [comments]
+        
+        row = [self.parent_window.name] + [self.ratings[filename] for filename in header[1:-1]] + [comments]
 
         
 
