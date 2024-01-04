@@ -150,7 +150,7 @@ class AudioPlayer(QWidget):
 
         # Comment Box
         self.comment_box = QTextEdit()
-        self.comment_box.setPlaceholderText("Additional Comments about the samples (if any): ")
+        self.comment_box.setPlaceholderText("If you feel other sensations other than the criteria described above, please provide additional comments about the samples: ")
         self.comment_box.setMinimumHeight(50)
         self.comment_box.setStyleSheet("""
             QTextEdit {
