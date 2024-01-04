@@ -33,12 +33,11 @@ class AudioPlayer(QWidget):
             definition_label = QLabel(
                 "<h2> Please rate the listening experience according to this criteria:</h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
-                "<li style='margin-bottom: 5px;'><strong><em>How strongly</em></strong> do you feel a sensation that is somewhat <strong><em>similar to a muffled/clogged/blocked ear</strong></em>?"
+                "<li style='margin-bottom: 5px;'><strong><em>How strongly</em></strong> do you feel a sensation that is somewhat <strong><em>similar to a muffled/clogged/blocked ear</strong></em>, sometimes it could even cause you headache or dizzyness?"
                 "<ul style='margin-bottom: 5px;'>Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator and you need to swallow to hear normal again</ul></li>"
-                "<li style='margin-bottom: 5px;'><strong><em>How strongly </strong></em> do you feel <strong><em>dizzyness or a headache</strong></em>?</li>"
-                "<li style='margin-bottom: 5px;'> <strong><em>10 = Strong Sensation</strong></em>, e.g. strong headache or feel like I need to swallow to pop my ear</li>"
+                "<li style='margin-bottom: 5px;'> <strong><em>10 = Strong Sensation</strong></em>, e.g. My ear feels like it's being sucked/pulled out and I feel like I need to swallow to pop my ear</li>"
                 "<li style='margin-bottom: 5px;'> <strong><em>0 = None, just like normal</strong></em></li>"
-                "<li style='margin-bottom: 5px;'> <strong><em>5 = The criterias above describe perfectly what I feel</strong></em></li>"
+                "<li style='margin-bottom: 5px;'> <strong><em>5 = I'm sure that my ears feel clogged/muffled/blocked and it's starting to feel uncomfortable </strong></em></li>"
                 "</ul>"
                 
                 "<h2> How to interact with the test interface: </h2>"
@@ -53,13 +52,13 @@ class AudioPlayer(QWidget):
                 "<h2> You will be presented with listening samples of different sound transitions, each is 3 seconds long and NOT looped. </h2>"
                 "<h2>The transition happens at about half way of the sample. Please pay attention to your listening experience after the transition</h2>"
                 "<h2> Please rate the listening experience according to this criteria:</h2>"
+                "<h2> Please rate the listening experience according to this criteria:</h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
-                "<li style='margin-bottom: 5px;'><strong><em>How strongly</em></strong> do you feel a sensation that is somewhat <strong><em>similar to a muffled/clogged/blocked ear</strong></em>?"
+                "<li style='margin-bottom: 5px;'><strong><em>How strongly</em></strong> do you feel a sensation that is somewhat <strong><em>similar to a muffled/clogged/blocked ear</strong></em>, sometimes it could even cause you headache or dizzyness?"
                 "<ul style='margin-bottom: 5px;'>Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator and you need to swallow to hear normal again</ul></li>"
-                "<li style='margin-bottom: 5px;'><strong><em>How strongly </strong></em> do you feel <strong><em>dizzyness or a headache</strong></em>?</li>"
-                "<li style='margin-bottom: 5px;'> <strong><em>10 = Strong Sensation</strong></em>, e.g. strong headache or feel like I need to swallow to pop my ear</li>"
+                "<li style='margin-bottom: 5px;'> <strong><em>10 = Strong Sensation</strong></em>, e.g. My ear feels like it's being sucked/pulled out and I feel like I need to swallow to pop my ear</li>"
                 "<li style='margin-bottom: 5px;'> <strong><em>0 = None, just like normal</strong></em></li>"
-                "<li style='margin-bottom: 5px;'> <strong><em>5 = The criterias above describe perfectly what I feel</strong></em></li>"
+                "<li style='margin-bottom: 5px;'> <strong><em>5 = I'm sure that my ears feel clogged/muffled/blocked and it's starting to feel uncomfortable </strong></em></li>"
                 "</ul>"
                 "<h2> How to interact with the test interface: </h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
@@ -305,9 +304,13 @@ class AudioPlayer(QWidget):
 
 
 
-    def reset_audio(self):
-        self.playing[self.currently_playing] = False
-        self.currently_playing = None
+    def reset_audio(self, status):
+        if status == QMediaPlayer.EndOfMedia:
+            if "passive" not in self.currently_playing:
+                self.playing[self.currently_playing] = False
+                self.currently_playing = None
+            else:
+                self.player.play()
 
 
 if __name__ == '__main__':
