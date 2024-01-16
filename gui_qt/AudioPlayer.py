@@ -49,7 +49,7 @@ class AudioPlayer(QWidget):
             )
         else:
             definition_label = QLabel(
-                "<h2> You will be presented with listening samples of different sound transitions, each is 3 seconds long and NOT looped. </h2>"
+                "<h2> You will be presented with listening samples of different sound transitions, each is 3 seconds long and NOT looped <strong><em>execept for the reference</em></strong>. </h2>"
                 "<h2>The transition happens at about half way of the sample. Please pay attention to your listening experience after the transition</h2>"
                 "<h2> Please rate the listening experience according to this criteria:</h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
