@@ -52,7 +52,6 @@ class AudioPlayer(QWidget):
                 "<h2> You will be presented with listening samples of different sound transitions, each is 3 seconds long and NOT looped. </h2>"
                 "<h2>The transition happens at about half way of the sample. Please pay attention to your listening experience after the transition</h2>"
                 "<h2> Please rate the listening experience according to this criteria:</h2>"
-                "<h2> Please rate the listening experience according to this criteria:</h2>"
                 "<ul style='font-size: 12pt; margin-bottom: 10px;'>"
                 "<li style='margin-bottom: 5px;'><strong><em>How strongly</em></strong> do you feel a sensation that is somewhat <strong><em>similar to a muffled/clogged/blocked ear</strong></em>, sometimes it could even cause you headache or dizzyness?"
                 "<ul style='margin-bottom: 5px;'>Example for this muffled/clogged/blocked ear sensation is when you are in an airplane or high speed elevator and you need to swallow to hear normal again</ul></li>"
