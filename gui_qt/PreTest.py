@@ -187,7 +187,7 @@ class HomeWindow(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    home = HomeWindow(r"C:\Users\LinhNguyen\Desktop\BA_Code\gui_qt\media\filter_pos", r"C:\Users\LinhNguyen\Desktop\BA_Code\gui_qt\results\filter_pos")
+    home = HomeWindow(r"C:\Users\LinhNguyen\Desktop\BA_Code\gui_qt\media\transition", r"C:\Users\LinhNguyen\Desktop\BA_Code\gui_qt\results\transition")
     # home = HomeWindow(r"/Users/nptlinh/Desktop/BA-Code/gui_qt/media/transition", r"/Users/nptlinh/Desktop/BA-Code/gui_qt/results/transition")
     home.show()
     sys.exit(app.exec_())
