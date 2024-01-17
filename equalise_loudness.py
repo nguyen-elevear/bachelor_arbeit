@@ -29,4 +29,4 @@ files = {
     "mensa": "/Users/nptlinh/Desktop/BA-Code/test_set/Cafeteria_Noise_binaural ( 0.00-30.00 s).wav"
 }
 
-modify_loudness(files, -40)
+modify_loudness(files, -25)

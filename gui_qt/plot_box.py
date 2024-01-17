@@ -20,6 +20,9 @@ def plot_box(filepaths):
     for i, filepath in enumerate(filepaths):
         df = pd.read_csv(filepath).replace("",0)
 
+        if 'comments' in df.columns:
+            df = df.drop(columns=['comments'])
+            
         ax = axes[i]
         df.boxplot(ax=ax)
         ax.set_title('Box Plot of ' + os.path.basename(filepath))
