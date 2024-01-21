@@ -25,7 +25,7 @@ def plot_box(filepaths):
             
         ax = axes[i]
         df.boxplot(ax=ax)
-        ax.set_title('Box Plot of ' + os.path.basename(filepath))
+        ax.set_title('Box Plot of ' + os.path.basename(filepath).split("_")[-1])
         ax.set_ylabel('Values')
         ax.tick_params(axis='x', rotation=45)  # Rotating the x-axis labels
 
