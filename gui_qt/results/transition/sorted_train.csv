@@ -1,4 +1,4 @@
-abrupt_train_-20dB.wav,slow_train_-20dB.wav,abrupt_train_-40dB.wav,slow_train_-40dB.wav,abrupt_train_-60dB.wav,slow_train_-60dB.wav,ID,comments
+abrupt -20dB.wav,slow -20dB.wav,abrupt -40dB.wav,slow -40dB.wav,abrupt -60dB.wav,slow -60dB.wav,ID,comments
 2,4,1,1,2,3,Sultan Dar,
 2,1,6,5,8,5,Henning,
 1,0,2,0,5,3,Raphael,
