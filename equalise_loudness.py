@@ -10,7 +10,7 @@ def modify_loudness(files, norm_loudness):
         meter = pyln.Meter(sample_rate) # create BS.1770 meter
         loudness = meter.integrated_loudness(data)
         print(loudness)
-        #loudness normalize audio to -40 dB LUFS
+        #loudness normalize audio
         loudness_normalized_audio = pyln.normalize.loudness(data, loudness, norm_loudness)
 
         # Writing a WAV file
@@ -31,6 +31,12 @@ def modify_loudness(files, norm_loudness):
 
 
 files = {
-    "pink": "/Users/nptlinh/Desktop/BA-Code/pink.wav",
+    "xm3_aircraft": "/Users/nptlinh/Desktop/BA-Code/dummy_head_test/processed_recordings/xm3_aircraft.wav",
+    "xm3_cafeteria": "/Users/nptlinh/Desktop/BA-Code/dummy_head_test/processed_recordings/xm3_cafeteria.wav",
+    "xm3_car": "/Users/nptlinh/Desktop/BA-Code/dummy_head_test/processed_recordings/xm3_car.wav",
+    "xm3_field": "/Users/nptlinh/Desktop/BA-Code/dummy_head_test/processed_recordings/xm3_field.wav",
+    "xm3_pub": "/Users/nptlinh/Desktop/BA-Code/dummy_head_test/processed_recordings/xm3_pub.wav",
+    "xm3_train": "/Users/nptlinh/Desktop/BA-Code/dummy_head_test/processed_recordings/xm3_train.wav"
+
 }
-modify_loudness(files, -60)
+modify_loudness(files, -27)
